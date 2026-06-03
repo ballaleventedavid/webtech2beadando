@@ -1,0 +1,42 @@
+<div class="login-container">
+  <div class="login-card glass-panel">
+    <div class="logo">
+      <h1>Kéziszerszám <span class="highlight">Készletnyilvántartó</span></h1>
+      <p>Új fiók létrehozása</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Felhasználónév (kötelező)</mat-label>
+        <input matInput formControlName="username" placeholder="Válasszon egy felhasználónevet">
+        <mat-error *ngIf="registerForm.get('username')?.hasError('minlength')">
+          A felhasználónévnek legalább 3 karakternek kell lennie.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Jelszó (kötelező)</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Válasszon egy jelszót">
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+          A jelszónak legalább 6 karakternek kell lennie.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="error-msg" *ngIf="errorMessage">
+        Sikertelen regisztráció.
+      </div>
+
+      <div class="success-msg" *ngIf="successMessage">
+        Sikeres regisztráció!
+      </div>
+
+      <button type="submit" class="premium-btn login-btn" [disabled]="registerForm.invalid">
+        REGISZTRÁCIÓ
+      </button>
+
+      <div class="register-link">
+        <a routerLink="/login">Bejelentkezés</a>
+      </div>
+    </form>
+  </div>
+</div>

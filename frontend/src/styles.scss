@@ -1,0 +1,109 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Minimalist Light Theme */
+:root {
+  --primary-color: #0284c7; /* Világos/közép kék */
+  --primary-light: #e0f2fe;
+  --success-color: #10b981; /* Világoszöld */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #334155;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+/* Glassmorphism/Card utility (Minimalist) */
+.glass-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Material Design Overrides for Light Mode */
+.mat-mdc-card {
+  background: var(--bg-card) !important;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.mat-mdc-text-field-wrapper {
+  background-color: #f1f5f9 !important;
+  border-radius: 8px !important;
+}
+
+.mat-mdc-input-element {
+  color: var(--text-main) !important;
+}
+
+.mat-mdc-form-field-label {
+  color: var(--text-muted) !important;
+}
+
+/* Buttons */
+.premium-btn {
+  background: var(--primary-color) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 8px 24px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  transition: all 0.2s ease !important;
+  border: none !important;
+}
+
+.premium-btn:hover {
+  background: #0369a1 !important;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+.success-btn {
+  background: var(--success-color) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 8px 24px !important;
+  font-weight: 600 !important;
+}
+
+.success-btn:hover {
+  background: #059669 !important;
+}
+
+/* Tables */
+.mat-mdc-table {
+  background: transparent !important;
+}
+
+.mat-mdc-header-cell {
+  color: var(--text-muted) !important;
+  font-weight: 600 !important;
+  border-bottom-color: var(--border-color) !important;
+}
+
+.mat-mdc-cell {
+  color: var(--text-main) !important;
+  border-bottom-color: var(--border-color) !important;
+}
+
+.mat-mdc-row:hover {
+  background-color: var(--primary-light) !important;
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+  font-weight: 700;
+  color: var(--primary-color);
+}

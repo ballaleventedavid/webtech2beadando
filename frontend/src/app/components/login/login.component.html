@@ -1,0 +1,32 @@
+<div class="login-container">
+  <div class="login-card glass-panel">
+    <div class="logo">
+      <h1>Kéziszerszám <span class="highlight">Készletnyilvántartó</span></h1>
+      <p>Rendszer bejelentkezés</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Felhasználónév (kötelező)</mat-label>
+        <input matInput formControlName="username" placeholder="Adja meg a felhasználónevét">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Jelszó (kötelező)</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Adja meg a jelszavát">
+      </mat-form-field>
+
+      <div class="error-msg" *ngIf="errorMessage">
+        Hibás felhasználónév vagy jelszó.
+      </div>
+
+      <button type="submit" class="premium-btn login-btn" [disabled]="loginForm.invalid">
+        BEJELENTKEZÉS
+      </button>
+
+      <div class="register-link">
+        <a routerLink="/register">Új fiók regisztrálása</a>
+      </div>
+    </form>
+  </div>
+</div>

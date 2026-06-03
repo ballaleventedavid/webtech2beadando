@@ -1,0 +1,56 @@
+<h2 mat-dialog-title class="dialog-title">
+  {{ isEditMode ? 'Termék Módosítása' : 'Új Termék Hozzáadása' }}
+</h2>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="toolForm" class="dialog-form">
+    
+    <div class="form-grid">
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Termék neve (kötelező)</mat-label>
+        <input matInput formControlName="name" placeholder="pl. Akkus fúró">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Márka (kötelező)</mat-label>
+        <input matInput formControlName="brand" placeholder="pl. Általános">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Kategória (kötelező)</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let cat of categories" [value]="cat">
+            {{ cat }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Ár (kötelező)</mat-label>
+        <input matInput type="number" formControlName="price" placeholder="pl. 45000">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true">
+        <mat-label>Mennyiség (kötelező)</mat-label>
+        <input matInput type="number" formControlName="quantity" placeholder="pl. 10">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" hideRequiredMarker="true" style="grid-column: 1 / -1;">
+        <mat-label>Kép URL (opcionális)</mat-label>
+        <input matInput formControlName="imageUrl" placeholder="https://pelda.com/kep.jpg">
+      </mat-form-field>
+    </div>
+
+    <div class="error-msg" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button class="cancel-btn" (click)="onCancel()">Mégse</button>
+  <button mat-button class="premium-btn" [disabled]="toolForm.invalid" (click)="onSubmit()">
+    Mentés
+  </button>
+</mat-dialog-actions>

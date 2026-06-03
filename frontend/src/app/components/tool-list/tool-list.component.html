@@ -1,0 +1,114 @@
+<div class="dashboard-container">
+  <div class="header">
+    <div class="logo">
+      <h2>Kéziszerszám <span class="highlight">Készletnyilvántartó</span></h2>
+    </div>
+    <div class="actions">
+      <button mat-button class="success-btn" (click)="exportToCSV()" style="margin-right: 12px;">
+        Exportálás (CSV)
+      </button>
+      <button mat-button class="premium-btn add-btn" (click)="openDialog()">
+        Új Termék
+      </button>
+      <button mat-button color="warn" (click)="logout()">
+        Kijelentkezés
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container glass-panel">
+    <div class="filter-container">
+      <mat-form-field appearance="outline" floatLabel="always" class="filter-select">
+        <mat-label>Keresés oszlopban</mat-label>
+        <mat-select [(ngModel)]="searchColumn" (selectionChange)="applyFilter()">
+          <mat-option value="all">Összes oszlop</mat-option>
+          <mat-option value="name">Megnevezés</mat-option>
+          <mat-option value="brand">Márka</mat-option>
+          <mat-option value="category">Kategória</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" floatLabel="always" class="filter-field">
+        <mat-label>Keresés...</mat-label>
+        <input matInput [(ngModel)]="searchQuery" (keyup)="applyFilter()" placeholder="Írjon be egy keresőszót...">
+        <button *ngIf="searchQuery" matSuffix mat-button aria-label="Keresés törlése" (click)="clearSearch()" style="min-width: 36px; padding: 0;">
+          X
+        </button>
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0">
+      
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef style="width: 50px;"> </th>
+        <td mat-cell *matCellDef="let tool">
+          <img *ngIf="tool.imageUrl" [src]="tool.imageUrl" alt="" class="tool-thumbnail" (error)="tool.imageUrl = null">
+          <div *ngIf="!tool.imageUrl" class="empty-thumbnail"></div>
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Megnevezés </th>
+        <td mat-cell *matCellDef="let tool"> <strong>{{tool.name}}</strong> </td>
+      </ng-container>
+
+      <!-- Brand Column -->
+      <ng-container matColumnDef="brand">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Márka </th>
+        <td mat-cell *matCellDef="let tool"> {{tool.brand}} </td>
+      </ng-container>
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Kategória </th>
+        <td mat-cell *matCellDef="let tool"> <span class="badge">{{tool.category}}</span> </td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ár </th>
+        <td mat-cell *matCellDef="let tool"> {{tool.price | number:'1.0-0'}} Ft </td>
+      </ng-container>
+
+      <!-- Quantity Column -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Készlet </th>
+        <td mat-cell *matCellDef="let tool">
+          <span
+            [ngClass]="{'out-of-stock': tool.quantity === 0, 'low-stock': tool.quantity > 0 && tool.quantity <= 5, 'in-stock': tool.quantity > 5}">
+            {{tool.quantity}} db
+            <span *ngIf="tool.quantity > 0 && tool.quantity <= 5" class="warning-text">(Kifogyóban!)</span>
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-col"> Műveletek </th>
+        <td mat-cell *matCellDef="let tool" class="actions-col">
+          <button mat-button color="primary" (click)="openDialog(tool)">
+            Szerkesztés
+          </button>
+          <button mat-button color="warn" (click)="deleteTool(tool._id)">
+            Törlés
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <div class="table-footer">
+      <div class="total-summary">
+        Készlet összértéke: <span class="total-amount">{{ getTotalValue() | number:'1.0-0' }} Ft</span>
+      </div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Oldal kiválasztása"></mat-paginator>
+    </div>
+
+    <div *ngIf="dataSource.data.length === 0" class="empty-state">
+      Nincs elérhető szerszám a készletben.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+.dialog-title {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.dialog-form {
+  padding-top: 8px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  
+  mat-form-field:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.cancel-btn {
+  color: var(--text-muted) !important;
+  margin-right: 8px;
+}
+
+.error-msg {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 16px;
+}
